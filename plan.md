@@ -17,7 +17,7 @@
             * Get the IDs of their followers
             * Save the user’s followers to a file named their ID
 
-### Check For New User Followers
+### Check For New User Followers
 #### Details
 * Compare the current followers of each subscriber with the data in their file
 * Message them with the difference
