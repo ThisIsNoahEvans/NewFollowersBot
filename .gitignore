@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# New Followers Bot -- API file
+# API keys are stored in here
+api.py
