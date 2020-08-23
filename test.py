@@ -1,20 +1,28 @@
-# This file is for quick tests I may need to make during development.
+import datetime
+import json
 
+# Save data
+userFollowerCountFile = open('user-follower-count.txt', 'a')
+now = datetime.datetime.now()
+time = str(now.strftime("%Y-%m-%d %H:%M:%S"))
+screenName = 'thisisnoahevans'
+followerCount = '12'
 
-import tweepy
-import api
+text = screenName + " --- " + followerCount + '\n'
+userFollowerCountFile.write(text)
+print('Saved data')
+userFollowerCountFile.close()
 
-
-# Initial API config
-auth = tweepy.OAuthHandler(api.consumer1, api.consumer2)
-auth.set_access_token(api.access1, api.access2)
-api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
-
-
-
-
-subscriberFollowers = api.followers_ids('whatcookingapp')
-subscriberFile = open('testfile.txt', "a+")
-for subscriberFollower in subscriberFollowers:
-    writeData = str(subscriberFollower)
-    subscriberFile.write(writeData + '\n')
+# Read data
+userFollowerCountFile = open('user-follower-count.txt', 'r')
+for line in userFollowerCountFile: 
+    if screenName in line:
+        print("Found data")
+        data = line.replace(screenName + " --- ", "")
+        data = data.replace(" ", "")
+        data = int(data)
+        print(data)
+        break
+    else:
+        print("No data found")
+        continue

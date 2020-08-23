@@ -132,3 +132,6 @@ dmypy.json
 # New Followers Bot -- API file
 # API keys are stored in here
 api.py
+
+# darn you macOS
+.DS_Store
