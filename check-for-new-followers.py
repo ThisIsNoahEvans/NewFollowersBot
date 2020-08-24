@@ -1,6 +1,7 @@
+# This script adds new accounts who have followed @NewFollowersBot to the system, and saves their current follower data.
+
 import tweepy
-import api # This opens api.py, which is not pushed to GitHub
-import json
+import api # This opens api.py, which is not pushed to GitHub. It contains the bot's API keys.
 
 # Initial API config
 auth = tweepy.OAuthHandler(api.consumer1, api.consumer2)
@@ -23,9 +24,9 @@ def checkForNewBotFollowers():
         userData = api.get_user(userID)
         userScreenName = userData.screen_name
         # Open the users file in read mode
-        usersFileRead = open('users.txt')
+        usersFileRead = open('users.txt', 'r')
         # Check if the user's screen name is already saved
-        if userScreenName in usersFileRead:
+        if userID in usersFileRead:
             print('User', userScreenName, 'is already saved')
             usersFileRead.close()
             continue
@@ -34,8 +35,8 @@ def checkForNewBotFollowers():
             usersFileRead.close()
             # Open the users file in edit mode
             usersFileWrite = open('users.txt', 'a')
-            # Save the user's screen name
-            usersFileWrite.append(userScreenName, '\n')
+            # Save the user's ID (we use account IDs for simplicity reasons)
+            usersFileWrite.append(userID, '\n')
             print('Saved user', userScreenName, 'to users file')
             # Create and open the user's file
             usersFileName = userID + '.txt'
@@ -56,9 +57,9 @@ def checkForNewBotFollowers():
             # Open the follower count file
             userFollowerCountFile = open('user-follower-count.txt', 'a')
             # Compose the data to be saved
-            data = userScreenName + " --- " + userFollowerCount + '\n'
+            data = userID + " --- " + userFollowerCount + '\n' # This is an INCREDIBLY dodgy way of doing things, so do as I say, not as I do kids
             # Write the data
-            userFollowerCountFile.write(data)
+            userFollowerCountFile.append(data)
             print('Saved the user', userScreenName, 'and their follower count of', userFollowerCount, 'to the file')
             # Close the file
             userFollowerCountFile.close()
