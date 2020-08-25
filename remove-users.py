@@ -11,3 +11,9 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, 
 def removeUsers():
     # Get the IDs of the bot's followers
     botFollowers = api.followers_ids('NewFollowersBot')
+
+    # Open the users file
+    usersFile = open('users.txt', 'w')
+
+    for follower in botFollowers:
+        # For each follower in the bot followers
