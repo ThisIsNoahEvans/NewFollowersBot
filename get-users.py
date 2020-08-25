@@ -8,15 +8,12 @@ auth = tweepy.OAuthHandler(api.consumer1, api.consumer2)
 auth.set_access_token(api.access1, api.access2)
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
 
-botFollowers = []
-botUsername = 'NewFollowersBot'
-
-userFollowerCount = 0
 
 def checkForNewBotFollowers():
+    userFollowerCount = 0
+    
     # Get the IDs of the bot's followers
-    for page in tweepy.Cursor(api.followers_ids, screen_name=botUsername).pages():
-        botFollowers.extend(page)
+    botFollowers = api.followers_ids('NewFollowersBot')
 
     # For each ID (user who follows the bot)
     for userID in botFollowers:
@@ -64,5 +61,11 @@ def checkForNewBotFollowers():
             # Close the file
             userFollowerCountFile.close()
 
+            # Create a message to send to the users
+            message = f'👋 Hello @{userScreenName}! You\'ve successfully joined the New Followers Bot by following this Twitter account. You\'ll get a message every week with how many followers you\'ve gained. 😎 Simply unfollow to unsubscribe. 😢 Have a great day!'
+            # Send the message
+            api.send_direct_message(userID, message)
 
+    
+# Uncomment before deploying this program 
 # checkForNewBotFollowers()
